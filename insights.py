@@ -13,3 +13,5 @@ print('COLUMNS')
 print(df.columns)
 print('getitem')
 print(len(df['weekday']))
+
+print(len(df[df.sender == 'Mau']))

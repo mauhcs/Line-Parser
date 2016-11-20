@@ -1,4 +1,5 @@
 import codecs
+from itertools import compress
 
 class Series(object):
     
@@ -24,7 +25,7 @@ class Series(object):
 class DataFrame(object):
     
     def __init__(self, data=None, columns=None):
-        
+        #Define the colmns
         if columns is None:
           self.columns = []
         else:
@@ -33,8 +34,10 @@ class DataFrame(object):
           else:
             print("Columns type "+ type(columns)+" not recognized. Type must be list.")
         
+        #Define the data
         self.data = {}
         if isinstance(data,list):
+          
           #if columns were given
           if self.columns:
             i = 0
@@ -46,6 +49,7 @@ class DataFrame(object):
               name = self.columns[i]
               self.data[name] = Series(d,name)
               i += 1
+          
           #if no columns were given
           else:
             i = 0
@@ -61,8 +65,16 @@ class DataFrame(object):
     def __getitem__(self, name):
         """Get items with [ and ]
         """
-        return self.data[name]
-        
+        if isinstance(name, str):
+          return self.data[name]
+        elif isinstance(name, list):
+          ind = list(compress(range(len(name)), name))
+          temp = DataFrame([[self.data[c].values[i] 
+                                for i in ind] 
+                               for c in self.columns],
+                               columns=self.columns)
+          return temp
+          
     def __getattr__( self, name):
         """Get Atributes with . 
         example df.column1
@@ -72,6 +84,9 @@ class DataFrame(object):
                 return self.data[col]
         print('No column',name)
         return []
+        
+    def __len__(self):
+      return len(self.data[self.columns[0]])
 
 def read_csv(filePath, sep=',', header=None,
              encode='utf-8', columns=None):
