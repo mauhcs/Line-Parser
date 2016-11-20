@@ -1,7 +1,7 @@
 import pagode as pd
 
 cols =['weekday','day','time','sender','msg']
-df = pd.read_csv('messages.txt', 
+df = pd.read_csv('data/messages.txt', 
               columns=cols, sep='|')
                 
 #print(df)

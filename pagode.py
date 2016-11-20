@@ -2,9 +2,12 @@ import codecs
 
 class Series(object):
     
-    def __init__(self, values=[], name=None):
+    def __init__(self, values=None, name=None):
         self.name = name
-        self.values = values
+        if values is None:
+          self.values = []
+        else:
+          self.values = values
 
     def append(self,value):
         self.values.append(value)
