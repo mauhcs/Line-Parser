@@ -23,9 +23,40 @@ class Series(object):
          
 class DataFrame(object):
     
-    def __init__(self):
-        self.columns = []
+    def __init__(self, data=None, columns=None):
+        
+        if columns is None:
+          self.columns = []
+        else:
+          if isinstance(columns,list):
+            self.columns = columns
+          else:
+            print("Columns type "+ type(columns)+" not recognized. Type must be list.")
+        
         self.data = {}
+        if isinstance(data,list):
+          #if columns were given
+          if self.columns:
+            i = 0
+            for d in data:
+              if not isinstance(d,list):
+                print("error. Data must be a list of lists")
+                return
+                
+              name = self.columns[i]
+              self.data[name] = Series(d,name)
+              i += 1
+          #if no columns were given
+          else:
+            i = 0
+            for d in data:
+              if not isinstance(d,list):
+                print("error. Data must be a list of lists")
+                return
+                
+              self.columns.append(i)
+              self.data[i] = Series(d,i)
+              i += 1
         
     def __getitem__(self, name):
         """Get items with [ and ]
