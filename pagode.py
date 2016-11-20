@@ -17,6 +17,9 @@ class Series(object):
     
     def __len__(self):
         return len(self.values)
+        
+    def __eq__(self, value):
+      return [v == value for v in self.values]
          
 class DataFrame(object):
     
