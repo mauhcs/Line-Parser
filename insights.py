@@ -3,15 +3,10 @@ import pagode as pd
 cols =['weekday','day','time','sender','msg']
 df = pd.read_csv('data/messages.txt', 
               columns=cols, sep='|')
-                
-#print(df)
-
-#print('DATA')
-#print(df.data)
-
-print('COLUMNS')
+print("Data Loaded.")              
+print("columns:")
 print(df.columns)
-print('getitem')
-print(len(df['weekday']))
+print("----")
+print("Number of messages:", len(df))
 
-print(len(df[df.sender == 'Mau']))
+print("Analysis period:", str(df.day[0]) +" ~ "+ str(df.day[-1]) )

@@ -21,7 +21,12 @@ class Series(object):
         
     def __eq__(self, value):
       return [v == value for v in self.values]
-         
+  
+    def __getitem__(self, position):
+        """ Select item woth [ and ]
+        """
+        return self.values[position]
+        
 class DataFrame(object):
     
     def __init__(self, data=None, columns=None):
