@@ -3,15 +3,11 @@ import re
 import collections
 
 from ignore import ignoredCharacters
-# Tally occurrences of words in a list
-
-
 
 class Printo(object):
     
-    def __init__(self, F = 'raw_text.txt'):
-        self.f = codecs.open('raw_text.txt',
-                           encoding='utf-8')
+    def __init__(self, F = 'data/raw_text.txt'):
+        self.f = codecs.open(F, encoding='utf-8')
         self.cnt = collections.Counter()
         self.ignored = ignoredCharacters()
    

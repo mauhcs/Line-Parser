@@ -2,7 +2,7 @@ from chatparser import Printo
 
 sep = '|'
 P = Printo()
-with open("messages.txt", 'a', encoding='utf-8') as f:
+with open("data/messages.txt", 'a', encoding='utf-8') as f:
     
     today = None
     for line in P.f:
