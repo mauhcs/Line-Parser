@@ -20,7 +20,7 @@ class Series(object):
     def unique(self):
         return set(self.values)
         
-    def countWords(self):
+    def countWords(self, caseSensitive=False):
         """ Count words is a series. 
             self = df.Column_with_text 
         """ 
@@ -30,7 +30,10 @@ class Series(object):
         for line in self.values:
             for w in line.split(' '):
                 if w not in self.ignored:
+                  if caseSensitive:
                     self.cnt[w] += 1
+                  else:
+                    self.cnt[w.lower()] += 1
     
     def mostCommon(self,N=5):
         self.countWords()

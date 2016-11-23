@@ -1,4 +1,4 @@
-import pagode as pd
+import pagode as pd 
 
 import datetime
 import numpy as np
@@ -83,14 +83,29 @@ plt.show()
 plt.clf()
 
 #Word Processing:
-    
-print(df.msg.mostCommon(10))
-print('___')
 
-print(df.msg.howMany('Rita',False,False))
-print("-")
-print(df.msg.howMany('Rita'))
+def showPopWords(popWords,title="Top words sent",by="everybody"):
+  print("---")
+  print(title,"by",by)
+  print()
+  for w in popWords:
+    print(w[0].replace("\n",""),":",w[1], "times")
+      
+mostPop = (df.msg.mostCommon(25))
+showPopWords(mostPop)
+mostPops = []
+for f in friends:
+  temp = df[df.sender == f].msg.mostCommon(25)
+  showPopWords(temp,by=f)
+print('_____________')
 
+print("Interesting Words and their frequency:")
+def howMany(word):
+  print(word,':',df.msg.howMany(word))
+
+WORDS = ["<3","bigode", "maori","jap[aã]o","brasil", "preguiça","sofrendo","\[sticker\]","andrea","juli","kaveh","Luis","emi","diogo"]
+for w in WORDS:
+  howMany(w)
 """
 #The text should be obly between 0 and 1.
 plt.text(0.5,0.5,"Rita \nKaori")
