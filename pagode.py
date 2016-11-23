@@ -1,5 +1,9 @@
+import re
 import codecs
+import collections
 from itertools import compress
+
+from ignore import ignoredCharacters
 
 class Series(object):
     
@@ -14,8 +18,43 @@ class Series(object):
         self.values.append(value)
         
     def unique(self):
-        return set(self.list)
+        return set(self.values)
+        
+    def countWords(self):
+        """ Count words is a series. 
+            self = df.Column_with_text 
+        """ 
+        self.cnt = collections.Counter()
+        self.ignored = ignoredCharacters()
+        
+        for line in self.values:
+            for w in line.split(' '):
+                if w not in self.ignored:
+                    self.cnt[w] += 1
     
+    def mostCommon(self,N=5):
+        self.countWords()
+        most = []
+        for x in self.cnt.most_common(N):
+            most.append(x)
+        return most
+    
+    def howMany(self, word, specialEnd=True,
+                aggr=True):
+        if specialEnd:
+            marks = "("+word[-1]+'*)[.?!,]*$'
+        else:
+            marks = ""
+        wordCount = []
+        self.countWords()
+        for w in self.cnt.most_common():
+          if re.match(word+marks, w[0], re.IGNORECASE):
+            wordCount.append(w)
+        if not aggr:
+            return wordCount
+        else: 
+            ret = sum([x[1] for x in wordCount])
+        return ret
     def __len__(self):
         return len(self.values)
         
@@ -66,6 +105,7 @@ class DataFrame(object):
               self.columns.append(i)
               self.data[i] = Series(d,i)
               i += 1
+        
         
     def __getitem__(self, name):
         """Get items with [ and ]
@@ -128,8 +168,3 @@ def read_csv(filePath, sep=',', header=None,
                 df.data[name].append(L)
                 i+=1
     return df
-    
-
-
-
-
