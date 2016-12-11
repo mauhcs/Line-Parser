@@ -3,7 +3,7 @@ import codecs
 import collections
 from itertools import compress
 
-from ignore import ignoredCharacters
+from ignore import ignoredCharacters, removeMarks
 
 class Series(object):
     
@@ -21,19 +21,20 @@ class Series(object):
         return set(self.values)
         
     def countWords(self, caseSensitive=False):
-        """ Count words is a series. 
-            self = df.Column_with_text 
-        """ 
-        self.cnt = collections.Counter()
-        self.ignored = ignoredCharacters()
-        
-        for line in self.values:
-            for w in line.split(' '):
-                if w not in self.ignored:
-                  if caseSensitive:
-                    self.cnt[w] += 1
-                  else:
-                    self.cnt[w.lower()] += 1
+      """ Count words is a series. 
+          self = df.Column_with_text 
+      """ 
+      self.cnt = collections.Counter()
+      self.ignored = ignoredCharacters()
+      
+      for line in self.values:
+        for w in line.split(' '):
+          if not re.match(self.ignored,w,re.IGNORECASE):
+            z = removeMarks(w)
+            if caseSensitive:
+              self.cnt[z] += 1
+            else:
+              self.cnt[w.lower()] += 1
     
     def mostCommon(self,N=5):
         self.countWords()

@@ -1,5 +1,6 @@
 import pagode as pd 
 
+
 import datetime
 import numpy as np
 import matplotlib.pyplot as plt
@@ -103,9 +104,10 @@ print("Interesting Words and their frequency:")
 def howMany(word):
   print(word,':',df.msg.howMany(word))
 
-WORDS = ["<3","bigode", "maori","jap[aã]o","brasil", "preguiça","sofrendo","\[sticker\]","andrea","juli","kaveh","Luis","emi","diogo"]
-for w in WORDS:
-  howMany(w)
+WORDS = ["<3", "peruca", "maori","jap[aã]o","brasil", "preguiça","sofrendo","\[sticker\]","andrea","juli","kaveh","Luis","emi","diogo"]
+#for w in WORDS:
+#  howMany(w)
+  
 """
 #The text should be obly between 0 and 1.
 plt.text(0.5,0.5,"Rita \nKaori")
@@ -113,3 +115,4 @@ plt.axis('off')
 plt.show()
 plt.clf()
 """
+
